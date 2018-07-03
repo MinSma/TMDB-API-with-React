@@ -1,6 +1,6 @@
-export const GET_MOVIES_BY_TITLE = 'Movies/GET_MOVIES_BY_TITLE';
+export const GET_MOVIES_BY_TITLE = 'GET_MOVIES_BY_TITLE';
 
-export const fetchLatestMovies = (query) => (dispatch) => {
+export const fetchMoviesByTitle= (query) => (dispatch) => {
     fetch(`https://api.themoviedb.org/3/search/movie?api_key=17dadb414883c56a000864669faba791&query=${query}`, {
         method: "GET"
     }).then(response => {
