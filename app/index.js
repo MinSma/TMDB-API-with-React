@@ -8,6 +8,7 @@ import MainPage from './MainPage';
 render(
     <Provider store={store}>
         <Router history={history}>
-            
+            <Route path="/" component={MainPage}>
+            </Route>
         </Router>
     </Provider>, document.querySelector('.app'));
