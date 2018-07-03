@@ -1,7 +1,7 @@
 import React from "react";
 import { AppBar, Input } from "@material-ui/core";
-import './styles.css';
 import MainPageHeader from "./MainPageHeader";
+
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from './actions';
@@ -14,15 +14,31 @@ class MainPage extends React.Component {
             searchText: ""
         };
 
+        this.timeout = null;
+
         this.handleText = this.handleText.bind(this);
+        this.handleMoviesFetch = this.handleMoviesFetch.bind(this);
     }
 
     handleText(e) {
         e.preventDefault();
 
-        if(e.target.value.length > 5){
-            this.props.fetchLatestMovies(e.target.value);
-        }
+        this.setState({
+            searchText: e.target.value
+        });
+    }
+
+    handleMoviesFetch(e){
+        e.preventDefault();
+
+        clearTimeout(this.timeout);
+
+        let text = this.state.searchText;
+        let func = this.props.fetchMoviesByTitle;
+
+        this.timeout = setTimeout(function () {
+        func(text)            
+        }.bind(this), 1000);
     }
     
     render () {
@@ -35,9 +51,9 @@ class MainPage extends React.Component {
                 <AppBar position="static"
                     label="Search for a movie"
                     component={this.renderSearchBox}
-                    input={this.state.searchText}
                     handleInput={this.handleText}
                     style={this.inputStyles()}
+                    fetch={this.handleMoviesFetch}
                 />
             </div>
         );
@@ -51,6 +67,7 @@ class MainPage extends React.Component {
                 {...props.input}
                 placeholder={props.label}
                 onChange={e => props.handleInput(e)}
+                onKeyUp={e => props.fetch(e)}
             />
         );
     }
