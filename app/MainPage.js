@@ -5,6 +5,7 @@ import MainPageHeader from "./MainPageHeader";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as actionCreators from './actions';
+import MoviesList from "./MoviesList";
 
 class MainPage extends React.Component {
     constructor(props){
@@ -55,6 +56,10 @@ class MainPage extends React.Component {
                     style={this.inputStyles()}
                     fetch={this.handleMoviesFetch}
                 />
+
+                <hr />
+
+                <MoviesList movies={this.props.movies} />
             </div>
         );
     }
