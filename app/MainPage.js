@@ -2,7 +2,11 @@ import React from "react";
 import { AppBar, Input } from "@material-ui/core";
 import MainPageHeader from "./MainPageHeader";
 
-export default class MainPage extends React.Component {
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as actionCreators from './actions';
+
+class MainPage extends React.Component {
     constructor(props){
         super(props);
 
@@ -10,11 +14,31 @@ export default class MainPage extends React.Component {
             searchText: ""
         };
 
+        this.timeout = null;
+
         this.handleText = this.handleText.bind(this);
+        this.handleMoviesFetch = this.handleMoviesFetch.bind(this);
     }
 
     handleText(e) {
         e.preventDefault();
+
+        this.setState({
+            searchText: e.target.value
+        });
+    }
+
+    handleMoviesFetch(e){
+        e.preventDefault();
+
+        clearTimeout(this.timeout);
+
+        let text = this.state.searchText;
+        let func = this.props.fetchMoviesByTitle;
+
+        this.timeout = setTimeout(function () {
+        func(text)            
+        }.bind(this), 1000);
     }
     
     render () {
@@ -27,9 +51,9 @@ export default class MainPage extends React.Component {
                 <AppBar position="static"
                     label="Search for a movie"
                     component={this.renderSearchBox}
-                    input={this.state.searchText}
                     handleInput={this.handleText}
                     style={this.inputStyles()}
+                    fetch={this.handleMoviesFetch}
                 />
             </div>
         );
@@ -43,6 +67,7 @@ export default class MainPage extends React.Component {
                 {...props.input}
                 placeholder={props.label}
                 onChange={e => props.handleInput(e)}
+                onKeyUp={e => props.fetch(e)}
             />
         );
     }
@@ -59,3 +84,15 @@ export default class MainPage extends React.Component {
         };
     }
 }
+
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators(actionCreators, dispatch);
+};
+
+const mapStateToProps = (store) => {
+    return {
+      movies: store.movies
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainPage)
