@@ -1,8 +1,12 @@
 import React from "react";
 import { AppBar, Input } from "@material-ui/core";
+import './styles.css';
 import MainPageHeader from "./MainPageHeader";
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as actionCreators from './actions';
 
-export default class MainPage extends React.Component {
+class MainPage extends React.Component {
     constructor(props){
         super(props);
 
@@ -15,6 +19,10 @@ export default class MainPage extends React.Component {
 
     handleText(e) {
         e.preventDefault();
+
+        if(e.target.value.length > 5){
+            this.props.fetchLatestMovies(e.target.value);
+        }
     }
     
     render () {
@@ -59,3 +67,15 @@ export default class MainPage extends React.Component {
         };
     }
 }
+
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators(actionCreators, dispatch);
+};
+
+const mapStateToProps = (store) => {
+    return {
+      movies: store.movies
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainPage)
