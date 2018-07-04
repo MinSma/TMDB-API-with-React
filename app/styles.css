@@ -9,5 +9,33 @@ a {
 }
 
 .moviePoster {
+    width: 240px;
+    height: 350px;
+}
+
+.moviePosterBox {
+    display: inline-block;
     margin: 1.5%;
+}
+
+.movieInfo {
+    position: absolute;
+    left: 50%;
+    margin-left: -100px;
+}
+
+.movieInfo {
+    position: absolute;
+    left: 45%;
+    margin-left: -100px;
+}
+
+.movieInfo p {
+    width: 60%;
+}
+
+.movieInfo img {
+    position: absolute;
+    left: 0%;
+    margin-left: -35%;
 }
