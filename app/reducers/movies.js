@@ -4,6 +4,8 @@ export default (state = [], action) => {
           return action.payload;
         case 'GET_LATEST_MOVIES':
           return action.payload;
+        case 'GET_TOP_20_MOVIES':
+          return action.payload;
         default:
             return state;
     }

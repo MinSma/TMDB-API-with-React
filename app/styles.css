@@ -4,8 +4,12 @@ a {
 }
 
 .navRightLinks {
-    margin-left: 55%;
+    margin-left: 40%;
     margin-right: 5%;
+}
+
+.bestRatedLink {
+    margin-left: 2%;
 }
 
 .moviePoster {
