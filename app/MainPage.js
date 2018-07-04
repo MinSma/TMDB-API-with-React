@@ -21,6 +21,10 @@ class MainPage extends React.Component {
         this.handleMoviesFetch = this.handleMoviesFetch.bind(this);
     }
 
+    componentDidMount(){
+        this.props.fetchLatestMovies();
+    }
+
     handleText(e) {
         e.preventDefault();
 
